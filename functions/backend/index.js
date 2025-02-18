@@ -57,7 +57,7 @@ app.post('/add', async (req, res) => {
         // Insert a new row into the Tasks table
         const record = await table.insertRow({
             Title: title,
-            description: description
+            description: description,
         });
 
         res.status(200).send({
@@ -116,7 +116,7 @@ app.delete('/:ROWID', async (req, res) => {
 app.put('/:ROWID', async (req, res) => {
     try {
         const { ROWID } = req.params;
-        const { title, description } = req.body;
+        const { title, description,status } = req.body;
         const { catalyst } = res.locals;
 
 
@@ -137,7 +137,8 @@ app.put('/:ROWID', async (req, res) => {
         const updatedData = {
             ROWID: ROWID, // Include ROWID in the updatedData object
             title,
-            description
+            description,
+            status
         };
         const table = catalyst.datastore().table('Tasks');
         const updatedRow = await table.updateRow(updatedData)

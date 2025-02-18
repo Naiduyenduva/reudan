@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useState } from "react";
 import { CircleX } from 'lucide-react';
+import { useTask } from "./TaskProvide";
 
-const CreateTask = ({onclose,setIsopen,fetch}:any) => {
-
+const CreateTask = () => {
+    const { createTask, setIsopen } = useTask();
     const [ title, setTitle ] = useState("");
     const [ description, setDescription ] = useState("");
 
@@ -13,12 +13,8 @@ const CreateTask = ({onclose,setIsopen,fetch}:any) => {
                 alert("title can't be empty")
             } else {
 
-                const response = await axios.post("http://localhost:3000/server/backend/add",{
-                    title,
-                    description
-                })
+                const response = createTask(title,description)
                 console.log(response.data)
-                fetch();
                 setIsopen(false)
             }
         } catch (error) {
@@ -32,7 +28,7 @@ const CreateTask = ({onclose,setIsopen,fetch}:any) => {
                 <div className="grid gap-4">
                     <div className="flex justify-between">
                         <h1>create task</h1>
-                        <button onClick={onclose}><CircleX /></button>
+                        <button onClick={()=>setIsopen(false)}><CircleX /></button>
                     </div>
                     <input placeholder="title" className="w-60 h-10 pl-1 bg-slate-300 outline-none rounded-lg" onChange={(e)=> {setTitle(e.target.value)}} />
                     <input placeholder="description" className="w-60 h-10 pl-1 bg-slate-300 outline-none rounded-lg" onChange={(e)=> {setDescription(e.target.value)}} />
