@@ -54,7 +54,6 @@ app.post('/add', async (req, res) => {
         const { catalyst } = res.locals;
         const table = catalyst.datastore().table('Tasks');
 
-        // Insert a new row into the Tasks table
         const record = await table.insertRow({
             Title: title,
             description: description,
@@ -85,17 +84,18 @@ app.post('/add', async (req, res) => {
 // DELETE API. Contains the logic to delete a task.
 app.delete('/:ROWID', async (req, res) => {
 	try {
-		const { ROWID } = req.params;
-        const { title, description } = req.body; // Extract title and description
+		const { ROWID } = req.params;        
+        const { title, description } = req.body;
 		const { catalyst } = res.locals;
+
 		if (isNaN(ROWID)) {
             return res.status(400).send({
                 status: 'failure',
                 message: 'Invalid ROWID. It must be a number.'
             });
         }
+
 		const table = catalyst.datastore().table('Tasks');
-        console.log(table)
 		const updatedRow = await table.deleteRow(ROWID,title,description);
 		res.status(200).send({
 			status: 'success',
@@ -103,6 +103,7 @@ app.delete('/:ROWID', async (req, res) => {
 				updatedRow
 			}
 		})
+
 	} catch (err) {
 		console.log(err);
 		res.status(500).send({
@@ -112,7 +113,7 @@ app.delete('/:ROWID', async (req, res) => {
 	}
 });
 
-// DELETE API. Contains the logic to delete a task.
+// PUT API. Contains the logic to Update a task.
 app.put('/:ROWID', async (req, res) => {
     try {
         const { ROWID } = req.params;
@@ -135,7 +136,7 @@ app.put('/:ROWID', async (req, res) => {
         }
 
         const updatedData = {
-            ROWID: ROWID, // Include ROWID in the updatedData object
+            ROWID: ROWID,
             title,
             description,
             status
@@ -149,6 +150,7 @@ app.put('/:ROWID', async (req, res) => {
                 updatedRow
             }
         });
+
     } catch (err) {
         console.log(err,"original error");
         res.status(500).send({
