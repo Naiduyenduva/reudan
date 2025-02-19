@@ -52,7 +52,7 @@ const UpdateTask = () => {
                 <div className="grid gap-4">
                     <div className="flex justify-between">
                         <h1>Update Task</h1>
-                        <button onClick={() => setIstrue(false)}>
+                        <button className="cursor-pointer" onClick={() => setIstrue(false)}>
                             <CircleX />
                         </button>
                     </div>
@@ -74,7 +74,7 @@ const UpdateTask = () => {
                         <option value="false">Pending</option>
                         <option value="true">Completed</option>
                     </select>
-                    <button onClick={handleSubmit} className="bg-blue-500 p-2 rounded-lg text-white">
+                    <button onClick={handleSubmit} className="bg-blue-500 p-2 rounded-lg text-white cursor-pointer">
                         Update Task
                     </button>
                 </div>
