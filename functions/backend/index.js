@@ -80,39 +80,6 @@ app.post('/add', async (req, res) => {
 });
 
 
-
-// DELETE API. Contains the logic to delete a task.
-app.delete('/:ROWID', async (req, res) => {
-	try {
-		const { ROWID } = req.params;        
-        const { title, description } = req.body;
-		const { catalyst } = res.locals;
-
-		if (isNaN(ROWID)) {
-            return res.status(400).send({
-                status: 'failure',
-                message: 'Invalid ROWID. It must be a number.'
-            });
-        }
-
-		const table = catalyst.datastore().table('Tasks');
-		const updatedRow = await table.deleteRow(ROWID,title,description);
-		res.status(200).send({
-			status: 'success',
-			data: {
-				updatedRow
-			}
-		})
-
-	} catch (err) {
-		console.log(err);
-		res.status(500).send({
-			status: 'failure',
-			message: "We're unable to process the request."
-		});
-	}
-});
-
 // PUT API. Contains the logic to Update a task.
 app.put('/:ROWID', async (req, res) => {
     try {
@@ -120,21 +87,21 @@ app.put('/:ROWID', async (req, res) => {
         const { title, description,status } = req.body;
         const { catalyst } = res.locals;
 
-
+        
         if (isNaN(ROWID)) {
             return res.status(400).send({
                 status: 'failure',
                 message: 'Invalid ROWID. It must be a number.'
             });
         }
-
+        
         if (!title || !description) {
             return res.status(400).send({
                 status: 'failure',
                 message: 'Both title and description are required.'
             });
         }
-
+        
         const updatedData = {
             ROWID: ROWID,
             title,
@@ -150,13 +117,43 @@ app.put('/:ROWID', async (req, res) => {
                 updatedRow
             }
         });
-
+        
     } catch (err) {
         console.log(err,"original error");
         res.status(500).send({
             status: 'failure',
             message: "We're unable to process the request."
         });
+    }
+});
+
+app.delete('/:ROWID', async (req, res) => {
+    try {
+        const { ROWID } = req.params;
+        const { title, description } = req.body;
+        const { catalyst } = res.locals;
+
+        if(isNaN(ROWID)) {
+            return res.status(400).send({
+                status: 'failure',
+                message: 'Invalid ROWID. It must be a number'
+            })
+        }
+
+        const table = catalyst.datastore().table('Tasks');
+        const updatedRow = await table.deleteRow(ROWID, title, description);
+        res.status(200).send({
+            status: 'success',
+            data: {
+                updatedRow
+            }
+        })
+    } catch (error) {
+        console.log(err)
+        res.status(500).send({
+            status: 'failure',
+            message: err.message || "We'are unable to process the request."
+        })
     }
 });
 
