@@ -2,6 +2,7 @@ import { useTask } from "./TaskProvide";
 import CreateTask from "./CreateTask";
 import TaskItem from "./TaskItem";
 import UpdateTask from "./UpdateTask";
+import Button from "./Button";
 import { useState } from "react";
 
 export interface taskProps {
@@ -30,25 +31,20 @@ const AllTasks = () => {
     });
 
     return (
-        <div className="w-[500px] border border-slate-400 m-5 p-3 rounded-lg">
+        <div className="sm:w-[500px] border border-slate-400 sm:m-5 p-3 rounded-lg">
             <div className="grid justify-between">
                 <div className="flex justify-between">
                     <h1 className="text-2xl font-bold mb-10">All Tasks</h1>
-                    <button 
-                        onClick={() => setIsopen(true)} 
-                        className="cursor-pointer bg-blue-500 p-1 rounded-lg h-8 text-white"
-                    >
-                        Add Task
-                    </button>
+                    <Button text="Add task" onClick={()=>setIsopen(true)} />
                 </div>
                 <div className="flex gap-10 mb-6">  
                     <input 
                         placeholder="Search" 
-                        className="w-60 h-10 pl-1 bg-slate-300 outline-none rounded-lg" 
+                        className="sm:w-60 h-10 pl-1 bg-slate-300 outline-none rounded-lg" 
                         onChange={(e) => setSearch(e.target.value)} 
                     />
                     <select 
-                        className="w-40 h-10 bg-slate-300 outline-none rounded-lg"
+                        className="sm:w-40 h-10 bg-slate-300 outline-none rounded-lg"
                         onChange={(e) => setFilterTasks(e.target.value)}
                     >
                         <option value="All">All</option>

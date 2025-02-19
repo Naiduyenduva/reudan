@@ -1,38 +1,52 @@
 import { useState } from "react";
 import { CircleX } from 'lucide-react';
 import { useTask } from "./TaskProvide";
+import Button from "./Button";
 
 const CreateTask = () => {
     const { createTask, setIsopen } = useTask();
+
     const [ title, setTitle ] = useState("");
     const [ description, setDescription ] = useState("");
+    const [ errorr, setError ] = useState("");
 
     async function handleSubmit () {
         try {
             if(title == "") {
-                alert("title can't be empty")
-            } else {
+                setError("title can't be empty")
+                return;
+            } 
+            const response = await createTask(title,description)
+            console.log(response)
+            alert("task created successfully")
 
-                const response = createTask(title,description)
-                console.log(response.data)
-                setIsopen(false)
-            }
+            setIsopen(false)
+            
         } catch (error) {
             console.log(error)
+            setError("Error creating task");
         }
     }
 
     return (
         <div className="fixed top-0 left-0 w-full h-full bg-white bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white bg-opacity-90 rounded-lg shadow-xl border border-red-900 p-6 text-center w-72">
+            <div className="bg-white bg-opacity-90 rounded-lg shadow-xl border border-gray-900 sm:p-6 p-2 text-center w-72">
+                <h1 className="text-red-600">{errorr}</h1>
                 <div className="grid gap-4">
                     <div className="flex justify-between">
-                        <h1>create task</h1>
+                        <h1>Create task</h1>
                         <button className="cursor-pointer" onClick={()=>setIsopen(false)}><CircleX /></button>
                     </div>
-                    <input placeholder="title" className="w-60 h-10 pl-1 bg-slate-300 outline-none rounded-lg" onChange={(e)=> {setTitle(e.target.value)}} />
-                    <input placeholder="description" className="w-60 h-10 pl-1 bg-slate-300 outline-none rounded-lg" onChange={(e)=> {setDescription(e.target.value)}} />
-                    <button onClick={handleSubmit} className="bg-blue-500 p-2 rounded-lg text-white cursor-pointer">Add Task</button>
+                    <input placeholder="title" 
+                    className="h-10 pl-1 bg-slate-300 outline-none rounded-lg" 
+                    onChange={(e)=> {setTitle(e.target.value)}} 
+                    />
+                    <textarea 
+                    placeholder="description" 
+                    className="h-16 pl-1 bg-slate-300 outline-none rounded-lg" 
+                    onChange={(e)=> {setDescription(e.target.value)}}
+                    ></textarea>
+                    <Button text="Add Task" onClick={handleSubmit} />
                 </div>
             </div>
         </div> 

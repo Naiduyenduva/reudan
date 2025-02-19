@@ -11,8 +11,7 @@ const TaskItem = ({task}:TaskItemProps) => {
     const { deleteTask, setIstrue, setUpdateTaskId } = useTask();
 
     return (    
-        <div>
-            <div className="flex justify-between gap-5 bg-white p-3 mb-2 w-[360px] h-[103px] border border-slate-400 rounded-lg">
+            <div className="flex justify-between gap-5 bg-white p-3 mb-2 sm:w-[470px] h-[103px] border border-slate-400 rounded-lg">
                 <div className="grid">
                     <h2 className="text-lg font-semibold">{task.title}</h2>
                     <h2 className="text-gray-700 text-sm">{task.description}</h2>
@@ -28,7 +27,6 @@ const TaskItem = ({task}:TaskItemProps) => {
                     </div>
                 </div>
             </div>
-        </div>
     )
 }
 export default TaskItem;
