@@ -1,6 +1,6 @@
 import './App.css'
 import AllTasks from './components/AllTasks'
-import { TaskProvider } from './components/TaskProvide'
+import { TaskProvider } from './components/TaskProvider'
 
 function App() {
 

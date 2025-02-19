@@ -1,5 +1,5 @@
 import Dot from "../icons/Dot";
-import { useTask } from "./TaskProvide";
+import { useTask } from "./TaskProvider";
 import { taskProps } from "./AllTasks";
 import { Trash2 } from 'lucide-react';
 import { SquarePen } from 'lucide-react';
