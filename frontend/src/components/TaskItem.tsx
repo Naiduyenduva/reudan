@@ -1,5 +1,5 @@
 import Dot from "../icons/Dot";
-import { useTask } from "./TaskProvider";
+import { useTask } from "../context/TaskProvider";
 import { taskProps } from "./AllTasks";
 import { Trash2 } from 'lucide-react';
 import { SquarePen } from 'lucide-react';
@@ -8,10 +8,11 @@ interface TaskItemProps {
     task: taskProps;
  }
 const TaskItem = ({task}:TaskItemProps) => {
+    
     const { deleteTask, setIstrue, setUpdateTaskId } = useTask();
 
     return (    
-            <div className="flex justify-between gap-5 bg-white p-3 mb-2 sm:w-[470px] h-[103px] border border-slate-400 rounded-lg">
+            <div className="flex justify-between gap-5 bg-white p-3 mb-2 sm:w-[470px] h-fit border border-slate-400 rounded-lg">
                 <div className="grid">
                     <h2 className="text-lg font-semibold">{task.title}</h2>
                     <h2 className="text-gray-700 text-sm">{task.description}</h2>

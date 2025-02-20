@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CircleX } from 'lucide-react';
-import { useTask } from "./TaskProvider";
+import { useTask } from "../context/TaskProvider";
 import Button from "./Button";
 
 const CreateTask = () => {

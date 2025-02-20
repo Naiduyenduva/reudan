@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { taskProps } from "./AllTasks";
+import { taskProps } from "../components/AllTasks";
 
 const TaskContext = createContext<any>(null);
 

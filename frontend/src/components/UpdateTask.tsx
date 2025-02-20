@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useTask } from "./TaskProvider";
+import { useTask } from "../context/TaskProvider";
 import { CircleX } from "lucide-react";
 import { taskProps } from "./AllTasks";
 import Button from "./Button";
