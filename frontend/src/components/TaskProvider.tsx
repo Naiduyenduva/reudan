@@ -11,23 +11,23 @@ export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
     const [updateTaskId, setUpdateTaskId] = useState<number | null>(null);
 
     async function fetchAllTasks() {
-        const response = await axios.get("http://localhost:3000/server/backend/all");
+        const response = await axios.get("https://reudanproject-60037710589.development.catalystserverless.in/server/backend/all");
         setTasks(response.data.data);
     }
 
     async function createTask(title: string, description: string) {
-        await axios.post("http://localhost:3000/server/backend/add", { title, description });
+        await axios.post("https://reudanproject-60037710589.development.catalystserverless.in/server/backend/add", { title, description });
         fetchAllTasks();
     }
 
     async function updateTask(id: number, title: string, description: string,status:boolean) {
-        await axios.put(`http://localhost:3000/server/backend/${id}`, { title, description,status });
+        await axios.put(`https://reudanproject-60037710589.development.catalystserverless.in/server/backend/${id}`, { title, description,status });
         fetchAllTasks();
         setIstrue(false);
     }
 
     async function deleteTask(id: number) {
-        await axios.delete(`http://localhost:3000/server/backend/${id}`);
+        await axios.delete(`https://reudanproject-60037710589.development.catalystserverless.in/server/backend/${id}`);
         fetchAllTasks();
     }
 
