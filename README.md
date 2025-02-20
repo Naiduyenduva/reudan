@@ -1,3 +1,19 @@
+
+If you want to try it Locally
+
+
+for frontend
+
+ -> cd frontend and run npm install followed by npm run dev
+
+
+for backend
+
+ -> cd functions -> cd backend and run -> catalyst serve
+
+-> change the API URL's to http://localhost:3000/'url'
+
+
 #Technology Stack
 
 Frontend -> React, Typescript and TailwindCSS
