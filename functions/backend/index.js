@@ -92,7 +92,7 @@ app.put('/:ROWID', async (req, res) => {
         if (!title) {
             return res.status(400).send({
                 status: 'failure',
-                message: 'Both title and description are required.'
+                message: 'title is required.'
             });
         }
         
