@@ -3,6 +3,7 @@ const catalystSDK = require('zcatalyst-sdk-node');
 const cors = require("cors")
 
 const app = express();
+
 app.use(express.json());
 app.use(cors());
 
@@ -12,12 +13,42 @@ app.use((req, res, next) => {
 	next();
 });
 
+// POST API. Contains the logic to create a task
+app.post('/add', async (req, res) => {
+    try {
+        const { title, description } = req.body;
+        const { catalyst } = res.locals;
+        const table = catalyst.datastore().table('Tasks');
+        
+        const record = await table.insertRow({
+            Title: title,
+            description: description,
+        });
+
+        res.status(200).send({
+            status: 'success',
+            data: {
+                todoItem: {
+                    id: record.ROWID,
+                    title,
+                    description
+                }
+            }
+        });
+        
+    } catch (err) {
+        res.status(500).send({
+            status: 'failure',
+            message: err.message || "We're unable to process the request."
+        });
+    }
+});
 
 app.get('/all', async (req, res) => {
     try {
         const { catalyst } = res.locals;
         const zcql = catalyst.zcql();
-
+        
         // Fetch all tasks with Title and description
         const todoItems = await zcql.executeZCQLQuery(`
             SELECT ROWID, CREATEDTIME,status, MODIFIEDTIME, Title, description FROM Tasks
@@ -36,7 +67,6 @@ app.get('/all', async (req, res) => {
         });
 
     } catch (err) {
-        console.error(err);
         res.status(500).send({
             status: 'failure',
             message: err.message || "We're unable to process the request."
@@ -44,43 +74,7 @@ app.get('/all', async (req, res) => {
     }
 });
 
-
-
-// POST API. Contains the logic to create a task
-
-app.post('/add', async (req, res) => {
-    try {
-        const { title, description } = req.body;
-        const { catalyst } = res.locals;
-        const table = catalyst.datastore().table('Tasks');
-
-        const record = await table.insertRow({
-            Title: title,
-            description: description,
-        });
-
-        res.status(200).send({
-            status: 'success',
-            data: {
-                todoItem: {
-                    id: record.ROWID,
-                    title,
-                    description
-                }
-            }
-        });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).send({
-            status: 'failure',
-            message: err.message || "We're unable to process the request."
-        });
-    }
-});
-
-
-// PUT API. Contains the logic to Update a task.
+//Handles logic of put request to update a task
 app.put('/:ROWID', async (req, res) => {
     try {
         const { ROWID } = req.params;
@@ -95,7 +89,7 @@ app.put('/:ROWID', async (req, res) => {
             });
         }
         
-        if (!title || !description) {
+        if (!title) {
             return res.status(400).send({
                 status: 'failure',
                 message: 'Both title and description are required.'
@@ -119,7 +113,6 @@ app.put('/:ROWID', async (req, res) => {
         });
         
     } catch (err) {
-        console.log(err,"original error");
         res.status(500).send({
             status: 'failure',
             message: "We're unable to process the request."
@@ -127,6 +120,7 @@ app.put('/:ROWID', async (req, res) => {
     }
 });
 
+//Handles logic of delete request to delete a task
 app.delete('/:ROWID', async (req, res) => {
     try {
         const { ROWID } = req.params;
@@ -149,7 +143,6 @@ app.delete('/:ROWID', async (req, res) => {
             }
         })
     } catch (error) {
-        console.log(err)
         res.status(500).send({
             status: 'failure',
             message: err.message || "We'are unable to process the request."
